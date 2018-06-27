@@ -6,7 +6,7 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 function RenderComments({comments}){
   const commentsRow = comments.map((comment) => {
     return (
-      <div key={comment.id}><span style={{color:'blue'}}> {comment.comment}</span>, <span>{comment.author}</span>, 
+      <div className="row-comment" key={comment.id}><span style={{color:'blue'}}> {comment.comment}</span>,&nbsp;<span>{comment.author}</span>,&nbsp;
       <span>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'})
               .format(new Date(Date.parse(comment.date)))}</span></div>
     ); 
@@ -51,8 +51,9 @@ class RenderCommentForm extends Component {
     
   handleSubmit(values) {
     console.log("Current state is: " + JSON.stringify(values));
-    alert("Current state is: " + JSON.stringify(values));
-    //event.preventDefault();
+    //alert("Current state is: " + JSON.stringify(values));
+    
+    this.props.addComment(this.props.dishId, values.rating, values.name, values.comment);
   }
 
   render(){
@@ -69,7 +70,7 @@ class RenderCommentForm extends Component {
             <Row className="form-group">
               <Label md={2}>Rating</Label>
               <Col md={10}>
-                  <Control.select model=".rating" name="rating" className="form-control">
+                  <Control.select model=".rating" name="rating" id="rating" className="form-control">
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
@@ -131,8 +132,8 @@ function DishDetail(props) {
               <RenderDish dish={props.dish} />
             </div>
             <div  className="col-12 col-md-5 m-1">
-              <RenderComments comments={props.comments} />
-              <RenderCommentForm />
+              <RenderComments comments={props.comments}/>
+              <RenderCommentForm dishId={props.dish.id} addComment={props.addComment}/>
             </div>
           </div>
         </div>
