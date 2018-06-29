@@ -4,33 +4,47 @@ import {Link} from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 function RenderComments({comments}){
-  const commentsRow = comments.map((comment) => {
-    return (
-      <div className="row-comment" key={comment.id}><span style={{color:'blue'}}> {comment.comment}</span>,&nbsp;<span>{comment.author}</span>,&nbsp;
-      <span>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'})
-              .format(new Date(Date.parse(comment.date)))}</span></div>
-    ); 
-  });
+  
+    const commentsRow = comments.map((comment) => {
+      return (
+        <Fade key={comment.id} in>
+        <div className="row-comment" key={comment.id}><span style={{color:'blue'}}> {comment.comment}</span>,&nbsp;<span>{comment.author}</span>,&nbsp;
+          <span>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'})
+                .format(new Date(Date.parse(comment.date)))}</span>
+        </div>
+        </Fade>
+      ); 
+    });
+  
 
   return (
     <div>
       <h1>Comments</h1>
-      {commentsRow}
+      <Stagger in>
+        {commentsRow}
+      </Stagger>
     </div>
     ); 
 }
 
 function RenderDish({dish}){
   return (
-      <Card>
-          <CardImg top src={baseUrl + dish.image} alt={dish.name} />
-          <CardBody>
-          <CardTitle>{dish.name}</CardTitle>
-          <CardText>{dish.description}</CardText>
-          </CardBody>
-      </Card>
+    <FadeTransform
+    in
+    transformProps={{
+        exitTransform: 'scale(0.5) translateY(-50%)'
+    }}>
+        <Card>
+            <CardImg top src={baseUrl + dish.image} alt={dish.name} />
+            <CardBody>
+            <CardTitle>{dish.name}</CardTitle>
+            <CardText>{dish.description}</CardText>
+            </CardBody>
+        </Card>
+    </FadeTransform>
   );
 }
 
