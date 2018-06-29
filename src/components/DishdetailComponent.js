@@ -55,7 +55,7 @@ class RenderCommentForm extends Component {
     console.log("Current state is: " + JSON.stringify(values));
     //alert("Current state is: " + JSON.stringify(values));
     
-    this.props.addComment(this.props.dishId, values.rating, values.name, values.comment);
+    this.props.postComment(this.props.dishId, values.rating, values.name, values.comment);
   }
 
   render(){
@@ -152,7 +152,7 @@ function DishDetail(props) {
             </div>
             <div  className="col-12 col-md-5 m-1">
               <RenderComments comments={props.comments}/>
-              <RenderCommentForm dishId={props.dish.id} addComment={props.addComment}/>
+              <RenderCommentForm dishId={props.dish.id} postComment={props.postComment}/>
             </div>
           </div>
         </div>
