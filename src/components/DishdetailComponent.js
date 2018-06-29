@@ -3,6 +3,7 @@ import { Card, CardBody, CardImg, CardTitle, CardText, Breadcrumb, BreadcrumbIte
 import {Link} from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 function RenderComments({comments}){
   const commentsRow = comments.map((comment) => {
@@ -24,7 +25,7 @@ function RenderComments({comments}){
 function RenderDish({dish}){
   return (
       <Card>
-          <CardImg top src={dish.image} alt={dish.name} />
+          <CardImg top src={baseUrl + dish.image} alt={dish.name} />
           <CardBody>
           <CardTitle>{dish.name}</CardTitle>
           <CardText>{dish.description}</CardText>
